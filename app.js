@@ -1897,6 +1897,16 @@
       } else {
         setStudioCamera('WARDROBE_CLOSEUP');
       }
+    } else if (type === 'flower-pot-1') {
+      showToast('🌿 Sculptural Fluted Urn with French Calla Lilies & Arching Olive Foliage');
+      if (window.Studio3D && typeof window.Studio3D.nudgeFlowerPot === 'function') {
+        window.Studio3D.nudgeFlowerPot(1);
+      }
+    } else if (type === 'flower-pot-2') {
+      showToast('🌸 Handcrafted Terracotta Planter with Blush Peonies & Baby\'s Breath');
+      if (window.Studio3D && typeof window.Studio3D.nudgeFlowerPot === 'function') {
+        window.Studio3D.nudgeFlowerPot(2);
+      }
     } else if (window.Studio3D) {
       if (typeof window.Studio3D.handleCanvasClick === 'function') {
         window.Studio3D.handleCanvasClick();

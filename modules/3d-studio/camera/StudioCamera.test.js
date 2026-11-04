@@ -181,16 +181,16 @@ test('CAMERA_PRESETS contains all required studio viewpoints', () => {
 // 3. Exact Preset Coordinates Verification
 test('STUDIO_OVERVIEW and WARDROBE_CLOSEUP match baseline studio coordinates', () => {
   const overview = CAMERA_PRESETS.STUDIO_OVERVIEW;
-  assert.strictEqual(overview.position.x, -0.10);
+  assert.strictEqual(overview.position.x, 0.0);
   assert.strictEqual(overview.position.y, 1.35);
-  assert.strictEqual(overview.position.z, 4.60);
-  assert.strictEqual(overview.target.x, -0.10);
+  assert.strictEqual(overview.position.z, 4.70);
+  assert.strictEqual(overview.target.x, 0.0);
   assert.strictEqual(overview.target.y, 1.08);
 
   const wardrobe = CAMERA_PRESETS.WARDROBE_CLOSEUP;
-  assert.strictEqual(wardrobe.position.x, -1.20);
+  assert.strictEqual(wardrobe.position.x, -1.38);
   assert.strictEqual(wardrobe.position.y, 1.25);
-  assert.strictEqual(wardrobe.position.z, -0.20);
+  assert.strictEqual(wardrobe.position.z, -0.70);
 });
 
 // 4. Default Preset Fallback
@@ -216,9 +216,9 @@ test('StudioCamera initializes PerspectiveCamera with correct parameters', () =>
   assert.strictEqual(cam.camera.name, 'Studio_PerspectiveCamera');
   assert.strictEqual(cam.camera.near, 0.1);
   assert.strictEqual(cam.camera.far, 40.0);
-  assert.strictEqual(cam.camera.position.x, -0.10);
+  assert.strictEqual(cam.camera.position.x, 0.0);
   assert.strictEqual(cam.camera.position.y, 1.35);
-  assert.strictEqual(cam.camera.position.z, 4.60);
+  assert.strictEqual(cam.camera.position.z, 4.70);
 });
 
 // 7. StudioCamera Aspect Ratio Calculation
@@ -319,12 +319,12 @@ test('CameraTransitions update lerps camera position and lookAt towards targets'
   const camera = new MockPerspectiveCamera(50, 1);
   camera.position.set(0, 0, 0);
 
-  trans.setPreset('WARDROBE_CLOSEUP'); // target x: -1.20
+  trans.setPreset('WARDROBE_CLOSEUP'); // target x: -1.38
   trans.update(camera, 1.0);
 
-  // Position should have moved halfway towards target
+  // Position should have moved halfway towards target (-1.38 * 0.5 = -0.69)
   assert.ok(camera.position.x < 0);
-  assert.ok(Math.abs(camera.position.x - (-0.60)) < 0.01);
+  assert.ok(Math.abs(camera.position.x - (-0.69)) < 0.01);
 });
 
 // 17. CameraTransitions FOV Damping & Clamping [26, 66]

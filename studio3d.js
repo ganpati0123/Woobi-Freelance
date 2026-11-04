@@ -24,14 +24,14 @@
 
     CAMERA_STATES = {
       STUDIO_OVERVIEW: {
-        position: new THREE.Vector3(-0.10, 1.35, 4.60),
-        target: new THREE.Vector3(-0.10, 1.08, -0.15),
+        position: new THREE.Vector3(0.0, 1.35, 4.70),
+        target: new THREE.Vector3(0.0, 1.08, -0.10),
         fovLandscape: 42,
         fovPortrait: 56
       },
       WARDROBE_CLOSEUP: {
-        position: new THREE.Vector3(-1.20, 1.25, -0.20),
-        target: new THREE.Vector3(-1.20, 1.20, -2.40),
+        position: new THREE.Vector3(-1.38, 1.25, -0.70),
+        target: new THREE.Vector3(-1.38, 1.20, -3.20),
         fovLandscape: 38,
         fovPortrait: 54
       },
@@ -283,6 +283,7 @@
       this.buildWovenRug();
       this.buildWardrobeFurniture();
       this.buildDressingVanity();
+      this.buildFlowerPots();
       this.buildHumanoidAvatar();
       this.loadRiggedAvatarGLB(); // Asynchronously attempt Ready Player Me / external model
       this.setupMirrorRenderPipeline();
@@ -681,9 +682,9 @@
       this.scene.add(rimLight);
 
       // Soft Warm Interior Fill for Wardrobe (Toned down so oak wood does not blow out)
-      const wardrobeSpot = new THREE.SpotLight(0xFFF2DE, 0.30, 4.8, Math.PI / 4, 0.45, 1.2);
-      wardrobeSpot.position.set(-1.20, 3.4, -1.00);
-      wardrobeSpot.target.position.set(-1.20, 1.22, -2.40);
+      const wardrobeSpot = new THREE.SpotLight(0xFFF2DE, 0.36, 5.2, Math.PI / 4, 0.45, 1.2);
+      wardrobeSpot.position.set(-1.38, 3.5, -1.50);
+      wardrobeSpot.target.position.set(-1.38, 1.22, -3.20);
       this.scene.add(wardrobeSpot);
       this.scene.add(wardrobeSpot.target);
 
@@ -888,9 +889,9 @@
       }
 
       const wardrobeGroup = new THREE.Group();
-      // Position naturally on left wall with angled perspective matching Reference D
-      wardrobeGroup.position.set(-1.20, 0, -2.40);
-      wardrobeGroup.rotation.y = 0.35;
+      // Position naturally on left wall with angled perspective matching Reference D, pushed backwards for spacious framing
+      wardrobeGroup.position.set(-1.38, 0, -3.20);
+      wardrobeGroup.rotation.y = 0.24;
 
       const scale = 2.40 / 3.00;
       const width = 2.20 * scale;
@@ -1492,6 +1493,430 @@
       this.interactiveObjects.push(hitBox);
 
       this.scene.add(vanityGroup);
+    }
+
+    /**
+     * DUAL ARTISANAL FLOWER POTS & SCULPTURAL BOTANICAL ARRANGEMENTS
+     * Enhances spatial aesthetics, depth, and luxury editorial ambiance.
+     * Pot 1 (Left): Tall Fluted Travertine/Ivory Floor Urn with Blooming French Calla Lilies & Deep Olive Foliage.
+     * Pot 2 (Right): Low Ribbed Tuscan Terracotta & Brass Tripod Bowl with Clustered Garden Peonies, English Roses & Baby's Breath.
+     */
+    buildFlowerPots() {
+      this.flowerPotsGroup = new THREE.Group();
+      this.flowerPotsGroup.name = 'woobi_flower_pots_root';
+      this.flowerPots = [];
+
+      // Shared Materials
+      const brassMat = new THREE.MeshStandardMaterial({
+        color: COLOR_PALETTE.warmBrass || 0xD8B478,
+        metalness: 0.88,
+        roughness: 0.22
+      });
+
+      const soilMat = new THREE.MeshStandardMaterial({
+        color: 0x221810,
+        roughness: 0.95,
+        metalness: 0.02
+      });
+
+      const shadowMat = new THREE.MeshBasicMaterial({
+        color: 0x1A120A,
+        transparent: true,
+        opacity: 0.28
+      });
+
+      // =======================================================================
+      // FLOWER POT 1 (LEFT): TALL FLUTED TRAVERTINE URN · FRENCH CALLA LILIES
+      // Positioned to bridge the space between the recessed wardrobe and left floor
+      // =======================================================================
+      const pot1Group = new THREE.Group();
+      pot1Group.name = 'FlowerPot1_CallaLilies';
+      pot1Group.position.set(-1.82, 0, -1.85);
+
+      // 1. Soft contact shadow on travertine floor
+      const shadow1 = new THREE.Mesh(new THREE.CircleGeometry(0.34, 32), shadowMat);
+      shadow1.rotation.x = -Math.PI / 2;
+      shadow1.position.y = 0.002;
+      pot1Group.add(shadow1);
+
+      // 2. Brushed champagne brass base ring
+      const baseRing1 = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.21, 0.035, 32), brassMat);
+      baseRing1.position.y = 0.0175;
+      baseRing1.castShadow = true;
+      baseRing1.receiveShadow = true;
+      pot1Group.add(baseRing1);
+
+      // 3. Fluted Travertine / Honed Cream Ceramic Urn
+      const urnMat = new THREE.MeshStandardMaterial({
+        color: 0xF6F2EB,
+        roughness: 0.46,
+        metalness: 0.03
+      });
+
+      // Lower flared taper
+      const urnLower = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.13, 0.36, 32), urnMat);
+      urnLower.position.y = 0.035 + 0.18;
+      urnLower.castShadow = true;
+      urnLower.receiveShadow = true;
+      pot1Group.add(urnLower);
+
+      // Urn middle waist
+      const urnWaist = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.18, 0.22, 32), urnMat);
+      urnWaist.position.y = 0.035 + 0.36 + 0.11;
+      urnWaist.castShadow = true;
+      urnWaist.receiveShadow = true;
+      pot1Group.add(urnWaist);
+
+      // Urn flared neck
+      const urnNeck = new THREE.Mesh(new THREE.CylinderGeometry(0.155, 0.20, 0.12, 32), urnMat);
+      urnNeck.position.y = 0.035 + 0.36 + 0.22 + 0.06;
+      urnNeck.castShadow = true;
+      pot1Group.add(urnNeck);
+
+      // Sculpted rolled lip
+      const urnRim = new THREE.Mesh(new THREE.TorusGeometry(0.158, 0.016, 16, 32), urnMat);
+      urnRim.rotation.x = Math.PI / 2;
+      urnRim.position.y = 0.775;
+      pot1Group.add(urnRim);
+
+      // Subtle fluting reeding ribs around urn body (16 elegant architectural grooves)
+      const fluteMat = new THREE.MeshStandardMaterial({
+        color: 0xECE5D8,
+        roughness: 0.55
+      });
+      for (let f = 0; f < 16; f++) {
+        const angle = (f / 16) * Math.PI * 2;
+        const rad = 0.185;
+        const flute = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.005, 0.62, 8), fluteMat);
+        flute.position.set(Math.cos(angle) * rad, 0.44, Math.sin(angle) * rad);
+        flute.castShadow = true;
+        pot1Group.add(flute);
+      }
+
+      // Potting soil
+      const soil1 = new THREE.Mesh(new THREE.CylinderGeometry(0.145, 0.145, 0.04, 24), soilMat);
+      soil1.position.y = 0.74;
+      pot1Group.add(soil1);
+
+      // 4. Botanical Arrangement: French Calla Lilies & Deep Olive Foliage
+      const stemMat = new THREE.MeshStandardMaterial({
+        color: 0x3E5336, // Deep brand olive
+        roughness: 0.52,
+        metalness: 0.04
+      });
+
+      const leafMat = new THREE.MeshStandardMaterial({
+        color: 0x485E3E,
+        roughness: 0.40,
+        metalness: 0.02,
+        side: THREE.DoubleSide
+      });
+
+      const lilySpatheMat = new THREE.MeshStandardMaterial({
+        color: 0xFFFDF8, // Pure warm ivory
+        roughness: 0.32,
+        metalness: 0.01,
+        emissive: 0x14120C,
+        side: THREE.DoubleSide
+      });
+
+      const spadixMat = new THREE.MeshStandardMaterial({
+        color: 0xEDB832, // Velvet golden pollen
+        roughness: 0.68,
+        metalness: 0.05
+      });
+
+      // Elongated sculptural arum leaves radiating outward
+      const leafConfigs = [
+        { rotX: 0.28, rotY: 0.4, rotZ: -0.45, len: 0.36, w: 0.13, y: 0.76 },
+        { rotX: -0.22, rotY: 1.8, rotZ: 0.40, len: 0.42, w: 0.14, y: 0.77 },
+        { rotX: 0.35, rotY: 2.9, rotZ: -0.32, len: 0.38, w: 0.12, y: 0.75 },
+        { rotX: -0.15, rotY: 4.2, rotZ: 0.48, len: 0.44, w: 0.15, y: 0.78 },
+        { rotX: 0.20, rotY: 5.1, rotZ: -0.25, len: 0.34, w: 0.12, y: 0.76 }
+      ];
+
+      leafConfigs.forEach(lc => {
+        const leafGroup = new THREE.Group();
+        leafGroup.position.set(0, lc.y, 0);
+        leafGroup.rotation.set(lc.rotX, lc.rotY, lc.rotZ);
+
+        const petiole = new THREE.Mesh(new THREE.CylinderGeometry(0.007, 0.007, lc.len * 0.5, 8), stemMat);
+        petiole.position.set(0, lc.len * 0.25, 0);
+        leafGroup.add(petiole);
+
+        const bladeGeo = new THREE.SphereGeometry(lc.w, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.5);
+        bladeGeo.scale(1.0, lc.len / lc.w, 0.14);
+        const blade = new THREE.Mesh(bladeGeo, leafMat);
+        blade.position.set(0, lc.len * 0.65, 0.02);
+        blade.rotation.x = 0.25;
+        blade.castShadow = true;
+        leafGroup.add(blade);
+
+        pot1Group.add(leafGroup);
+      });
+
+      // 4 Blooming French Calla Lilies at elegant heights
+      const lilyConfigs = [
+        { height: 0.68, angleY: 0.5, tiltX: 0.24, tiltZ: 0.18, scale: 1.05 },
+        { height: 0.78, angleY: 1.9, tiltX: -0.18, tiltZ: 0.22, scale: 1.15 },
+        { height: 0.62, angleY: 3.4, tiltX: 0.22, tiltZ: -0.20, scale: 0.95 },
+        { height: 0.85, angleY: 4.8, tiltX: -0.22, tiltZ: -0.16, scale: 1.20 }
+      ];
+
+      lilyConfigs.forEach(lic => {
+        const flowerGroup = new THREE.Group();
+        flowerGroup.position.set(0, 0.75, 0);
+        flowerGroup.rotation.y = lic.angleY;
+
+        const stalk = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.012, lic.height, 12), stemMat);
+        stalk.position.set(lic.tiltX * 0.25, lic.height / 2, lic.tiltZ * 0.25);
+        stalk.rotation.set(lic.tiltX, 0, lic.tiltZ);
+        stalk.castShadow = true;
+        flowerGroup.add(stalk);
+
+        const headGroup = new THREE.Group();
+        headGroup.position.set(lic.tiltX * lic.height * 0.5, lic.height, lic.tiltZ * lic.height * 0.5);
+        headGroup.rotation.set(lic.tiltX * 1.5, 0, lic.tiltZ * 1.5);
+        headGroup.scale.set(lic.scale, lic.scale, lic.scale);
+
+        const spatheGeo = new THREE.CylinderGeometry(0.048, 0.012, 0.11, 24, 1, true);
+        const spathe = new THREE.Mesh(spatheGeo, lilySpatheMat);
+        spathe.position.y = 0.055;
+        spathe.castShadow = true;
+        headGroup.add(spathe);
+
+        const lipGeo = new THREE.ConeGeometry(0.046, 0.08, 16, 1, true);
+        const lip = new THREE.Mesh(lipGeo, lilySpatheMat);
+        lip.rotation.x = Math.PI;
+        lip.position.set(0, 0.13, 0.012);
+        lip.rotation.z = 0.25;
+        headGroup.add(lip);
+
+        const spadix = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.008, 0.075, 12), spadixMat);
+        spadix.position.set(0, 0.065, 0.008);
+        spadix.rotation.x = 0.12;
+        headGroup.add(spadix);
+
+        flowerGroup.add(headGroup);
+        pot1Group.add(flowerGroup);
+      });
+
+      // HitBox for Pot 1 interaction
+      const hitBox1 = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.32, 0.32, 1.45, 16),
+        new THREE.MeshBasicMaterial({ visible: false })
+      );
+      hitBox1.position.set(0, 0.72, 0);
+      hitBox1.userData = { interactiveType: 'flower-pot-1', name: 'Fluted Travertine Urn · French Calla Lilies' };
+      pot1Group.add(hitBox1);
+      this.interactiveObjects.push(hitBox1);
+
+      this.flowerPotsGroup.add(pot1Group);
+      this.flowerPots.push(pot1Group);
+
+      // =======================================================================
+      // FLOWER POT 2 (RIGHT): TUSCAN TERRACOTTA PEDESTAL BOWL · BLUSH PEONIES
+      // Positioned to the right of central dais, in front-right of the dressing vanity
+      // =======================================================================
+      const pot2Group = new THREE.Group();
+      pot2Group.name = 'FlowerPot2_BlushPeonies';
+      pot2Group.position.set(1.65, 0, -1.45);
+
+      // 1. Contact shadow disc
+      const shadow2 = new THREE.Mesh(new THREE.CircleGeometry(0.30, 32), shadowMat);
+      shadow2.rotation.x = -Math.PI / 2;
+      shadow2.position.y = 0.002;
+      pot2Group.add(shadow2);
+
+      // 2. Minimalist Champagne Brass Tripod Stand
+      const tripodGroup = new THREE.Group();
+      const legHeight = 0.30;
+      for (let l = 0; l < 3; l++) {
+        const lAngle = (l / 3) * Math.PI * 2;
+        const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.010, 0.008, legHeight, 16), brassMat);
+        leg.position.set(Math.cos(lAngle) * 0.18, legHeight / 2, Math.sin(lAngle) * 0.18);
+        leg.rotation.z = -Math.cos(lAngle) * 0.12;
+        leg.rotation.x = Math.sin(lAngle) * 0.12;
+        leg.castShadow = true;
+        tripodGroup.add(leg);
+      }
+      const collarRing = new THREE.Mesh(new THREE.TorusGeometry(0.18, 0.011, 16, 32), brassMat);
+      collarRing.rotation.x = Math.PI / 2;
+      collarRing.position.y = legHeight;
+      tripodGroup.add(collarRing);
+      pot2Group.add(tripodGroup);
+
+      // 3. Ribbed Artisanal Tuscan Terracotta Planter Bowl
+      const terracottaMat = new THREE.MeshStandardMaterial({
+        color: 0xC67A53, // Warm Tuscan terracotta
+        roughness: 0.74,
+        metalness: 0.02
+      });
+
+      const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.13, 0.25, 32), terracottaMat);
+      bowl.position.y = legHeight + 0.125;
+      bowl.castShadow = true;
+      bowl.receiveShadow = true;
+      pot2Group.add(bowl);
+
+      const ring1 = new THREE.Mesh(new THREE.TorusGeometry(0.242, 0.008, 12, 48), terracottaMat);
+      ring1.rotation.x = Math.PI / 2;
+      ring1.position.y = legHeight + 0.21;
+      pot2Group.add(ring1);
+
+      const ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.215, 0.007, 12, 48), terracottaMat);
+      ring2.rotation.x = Math.PI / 2;
+      ring2.position.y = legHeight + 0.14;
+      pot2Group.add(ring2);
+
+      const soil2 = new THREE.Mesh(new THREE.CylinderGeometry(0.23, 0.23, 0.03, 24), soilMat);
+      soil2.position.y = legHeight + 0.23;
+      pot2Group.add(soil2);
+
+      // 4. Botanical Arrangement: Clustered English Peonies, Blush Roses & Baby's Breath
+      const peonyPinkMat = new THREE.MeshStandardMaterial({
+        color: 0xF2B3A2, // Warm blush-rose peony
+        roughness: 0.38,
+        metalness: 0.01
+      });
+
+      const peonyCreamMat = new THREE.MeshStandardMaterial({
+        color: 0xFFF6EB, // Cream champagne peony
+        roughness: 0.35,
+        metalness: 0.01
+      });
+
+      const rosePeachMat = new THREE.MeshStandardMaterial({
+        color: 0xFCDCCF, // Soft peach garden rose
+        roughness: 0.38,
+        metalness: 0.01
+      });
+
+      const gypsophilaMat = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFB, // Tiny pure white baby's breath florets
+        roughness: 0.40,
+        emissive: 0x222218
+      });
+
+      const foliageMat = new THREE.MeshStandardMaterial({
+        color: 0x566B4E, // Sage green eucalyptus
+        roughness: 0.50,
+        side: THREE.DoubleSide
+      });
+
+      const createPeonyFlower = (primaryMat, scale = 1.0) => {
+        const head = new THREE.Group();
+        const core = new THREE.Mesh(new THREE.SphereGeometry(0.045 * scale, 16, 16), primaryMat);
+        head.add(core);
+
+        const poll = new THREE.Mesh(new THREE.SphereGeometry(0.02 * scale, 12, 12), spadixMat);
+        poll.position.y = 0.02 * scale;
+        head.add(poll);
+
+        for (let p = 0; p < 8; p++) {
+          const pAngle = (p / 8) * Math.PI * 2;
+          const petalGeo = new THREE.SphereGeometry(0.038 * scale, 12, 12, 0, Math.PI, 0, Math.PI * 0.5);
+          petalGeo.scale(1.2, 0.7, 0.25);
+          const petal = new THREE.Mesh(petalGeo, primaryMat);
+          petal.position.set(Math.cos(pAngle) * 0.035 * scale, 0.01 * scale, Math.sin(pAngle) * 0.035 * scale);
+          petal.rotation.set(0.4, pAngle + Math.PI / 2, 0);
+          petal.castShadow = true;
+          head.add(petal);
+        }
+        return head;
+      };
+
+      const bouquetConfigs = [
+        { x: 0.00, y: 0.28, z: 0.00, mat: peonyPinkMat, scale: 1.15, tilt: [0.1, 0, 0] },
+        { x: -0.09, y: 0.25, z: 0.08, mat: rosePeachMat, scale: 1.0, tilt: [-0.2, 0.3, 0.2] },
+        { x: 0.08, y: 0.26, z: 0.07, mat: peonyCreamMat, scale: 1.05, tilt: [0.2, -0.4, -0.2] },
+        { x: -0.10, y: 0.23, z: -0.07, mat: peonyPinkMat, scale: 0.95, tilt: [-0.3, 0.2, 0.3] },
+        { x: 0.09, y: 0.24, z: -0.08, mat: rosePeachMat, scale: 0.95, tilt: [0.3, -0.3, -0.2] },
+        { x: -0.02, y: 0.22, z: 0.14, mat: peonyCreamMat, scale: 0.85, tilt: [0.4, 0.1, 0.1] },
+        { x: 0.13, y: 0.21, z: 0.02, mat: peonyPinkMat, scale: 0.88, tilt: [-0.1, 0.5, -0.4] }
+      ];
+
+      bouquetConfigs.forEach(bc => {
+        const flower = createPeonyFlower(bc.mat, bc.scale);
+        flower.position.set(bc.x, legHeight + bc.y, bc.z);
+        flower.rotation.set(bc.tilt[0], bc.tilt[1], bc.tilt[2]);
+        pot2Group.add(flower);
+      });
+
+      for (let g = 0; g < 14; g++) {
+        const gAngle = (g / 14) * Math.PI * 2 + Math.random() * 0.3;
+        const gRadius = 0.08 + Math.random() * 0.11;
+        const sprigY = legHeight + 0.30 + Math.random() * 0.08;
+
+        const gStem = new THREE.Mesh(new THREE.CylinderGeometry(0.003, 0.003, 0.10, 6), stemMat);
+        gStem.position.set(Math.cos(gAngle) * gRadius, sprigY - 0.04, Math.sin(gAngle) * gRadius);
+        gStem.rotation.set((Math.random() - 0.5) * 0.5, gAngle, (Math.random() - 0.5) * 0.5);
+        pot2Group.add(gStem);
+
+        for (let fl = 0; fl < 3; fl++) {
+          const floret = new THREE.Mesh(new THREE.SphereGeometry(0.010, 8, 8), gypsophilaMat);
+          floret.position.set(
+            Math.cos(gAngle) * gRadius + (Math.random() - 0.5) * 0.03,
+            sprigY + (Math.random() - 0.5) * 0.02,
+            Math.sin(gAngle) * gRadius + (Math.random() - 0.5) * 0.03
+          );
+          pot2Group.add(floret);
+        }
+      }
+
+      for (let c = 0; c < 4; c++) {
+        const cAngle = (c / 4) * Math.PI * 2 + 0.4;
+        const cascadeGroup = new THREE.Group();
+        cascadeGroup.position.set(Math.cos(cAngle) * 0.23, legHeight + 0.22, Math.sin(cAngle) * 0.23);
+        cascadeGroup.rotation.y = cAngle;
+
+        for (let e = 0; e < 5; e++) {
+          const leafEuc = new THREE.Mesh(new THREE.SphereGeometry(0.022, 10, 10), foliageMat);
+          leafEuc.scale.set(1.0, 0.25, 1.2);
+          leafEuc.position.set(0, -e * 0.028, e * 0.024);
+          leafEuc.rotation.set(0.6 + e * 0.15, 0, (e % 2 === 0 ? 0.3 : -0.3));
+          leafEuc.castShadow = true;
+          cascadeGroup.add(leafEuc);
+        }
+        pot2Group.add(cascadeGroup);
+      }
+
+      // HitBox for Pot 2 interaction
+      const hitBox2 = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.30, 0.30, 0.85, 16),
+        new THREE.MeshBasicMaterial({ visible: false })
+      );
+      hitBox2.position.set(0, 0.45, 0);
+      hitBox2.userData = { interactiveType: 'flower-pot-2', name: 'Terracotta Pedestal Planter · Garden Peonies & Baby\'s Breath' };
+      pot2Group.add(hitBox2);
+      this.interactiveObjects.push(hitBox2);
+
+      this.flowerPotsGroup.add(pot2Group);
+      this.flowerPots.push(pot2Group);
+
+      // Add flower pots root to the scene
+      this.scene.add(this.flowerPotsGroup);
+    }
+
+    /**
+     * Interactive spring nudge animation when user taps a flower pot
+     */
+    nudgeFlowerPot(index = 1) {
+      const pot = index === 1 ? (this.flowerPots && this.flowerPots[0]) : (this.flowerPots && this.flowerPots[1]);
+      if (!pot) return;
+      const start = performance.now();
+      const initialRotZ = pot.rotation.z;
+      const animateNudge = (now) => {
+        const elapsed = (now - start) / 1000;
+        if (elapsed < 1.2) {
+          const decay = Math.exp(-elapsed * 3.5);
+          pot.rotation.z = initialRotZ + Math.sin(elapsed * 16) * 0.06 * decay;
+          requestAnimationFrame(animateNudge);
+        } else {
+          pot.rotation.z = initialRotZ;
+        }
+      };
+      requestAnimationFrame(animateNudge);
     }
 
     /**
@@ -2536,6 +2961,10 @@
       }
       if (this.lightingModel) {
         this.lightingModel.dispose(this.scene);
+      }
+      if (this.flowerPotsGroup && this.scene) {
+        this.scene.remove(this.flowerPotsGroup);
+        this.flowerPotsGroup = null;
       }
       if (this.themeModel) {
         this.themeModel.dispose(this.scene);

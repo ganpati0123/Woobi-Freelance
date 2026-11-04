@@ -1,0 +1,8 @@
+{
+  "name": "Woobi — 3D Virtual Fashion Studio",
+  "description": "Personal digital wardrobe and 3D styling studio. Discover, organize, and try on outfits from your own clothes with interactive 3D wardrobe, avatar customization, and climate-aware styling.",
+  "requestFrame": "auto",
+  "prompt": "Woobi 3D Virtual Fashion Studio and Wardrobe",
+  "permissions": [],
+  "capabilities": []
+}

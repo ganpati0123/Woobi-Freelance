@@ -6,15 +6,15 @@
 export const CAMERA_PRESETS = {
   STUDIO_OVERVIEW: {
     name: 'STUDIO_OVERVIEW',
-    position: { x: -0.10, y: 1.35, z: 4.60 },
-    target: { x: -0.10, y: 1.08, z: -0.15 },
+    position: { x: 0.0, y: 1.35, z: 4.70 },
+    target: { x: 0.0, y: 1.08, z: -0.10 },
     fovLandscape: 42,
     fovPortrait: 56
   },
   WARDROBE_CLOSEUP: {
     name: 'WARDROBE_CLOSEUP',
-    position: { x: -1.20, y: 1.25, z: -0.20 },
-    target: { x: -1.20, y: 1.20, z: -2.40 },
+    position: { x: -1.38, y: 1.25, z: -0.70 },
+    target: { x: -1.38, y: 1.20, z: -3.20 },
     fovLandscape: 38,
     fovPortrait: 54
   },

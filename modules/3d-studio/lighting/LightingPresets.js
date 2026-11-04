@@ -37,12 +37,12 @@ export const LIGHTING_PRESETS = {
     wardrobeSpot: {
       color: 0xFFE5BF,
       intensity: 0.50,
-      distance: 4.8,
+      distance: 5.2,
       angle: Math.PI / 4,
       penumbra: 0.45,
       decay: 1.2,
-      position: { x: -1.20, y: 3.4, z: -1.00 },
-      target: { x: -1.20, y: 1.22, z: -2.40 }
+      position: { x: -1.38, y: 3.5, z: -1.50 },
+      target: { x: -1.38, y: 1.22, z: -3.20 }
     },
     vanitySpot: {
       color: 0xFFE5BF,
@@ -89,12 +89,12 @@ export const LIGHTING_PRESETS = {
     wardrobeSpot: {
       color: 0xF2F2F2,
       intensity: 0.45,
-      distance: 4.8,
+      distance: 5.2,
       angle: Math.PI / 4,
       penumbra: 0.45,
       decay: 1.2,
-      position: { x: -1.20, y: 3.4, z: -1.00 },
-      target: { x: -1.20, y: 1.22, z: -2.40 }
+      position: { x: -1.38, y: 3.5, z: -1.50 },
+      target: { x: -1.38, y: 1.22, z: -3.20 }
     },
     vanitySpot: {
       color: 0xF2F2F2,
@@ -141,12 +141,12 @@ export const LIGHTING_PRESETS = {
     wardrobeSpot: {
       color: 0xFFDDB0,
       intensity: 0.48,
-      distance: 4.8,
+      distance: 5.2,
       angle: Math.PI / 4,
       penumbra: 0.45,
       decay: 1.2,
-      position: { x: -1.20, y: 3.4, z: -1.00 },
-      target: { x: -1.20, y: 1.22, z: -2.40 }
+      position: { x: -1.38, y: 3.5, z: -1.50 },
+      target: { x: -1.38, y: 1.22, z: -3.20 }
     },
     vanitySpot: {
       color: 0xFFDDB0,
