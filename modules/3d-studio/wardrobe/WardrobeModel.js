@@ -13,7 +13,8 @@ export const WARDROBE_CONFIG = {
   width: 2.20 * (2.40 / 3.00),
   height: 3.00 * (2.40 / 3.00),
   depth: 0.65 * (2.40 / 3.00),
-  position: { x: -1.38, y: 0, z: -3.20 },
+  // Set the wardrobe farther into the room so its full silhouette stays inside the portrait frame.
+  position: { x: -1.38, y: 0, z: -3.55 },
   rotationY: 0.24
 };
 

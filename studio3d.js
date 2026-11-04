@@ -30,8 +30,8 @@
         fovPortrait: 56
       },
       WARDROBE_CLOSEUP: {
-        position: new THREE.Vector3(-1.38, 1.25, -0.70),
-        target: new THREE.Vector3(-1.38, 1.20, -3.20),
+        position: new THREE.Vector3(-1.38, 1.25, -1.00),
+        target: new THREE.Vector3(-1.38, 1.20, -3.55),
         fovLandscape: 38,
         fovPortrait: 54
       },
@@ -890,7 +890,7 @@
 
       const wardrobeGroup = new THREE.Group();
       // Position naturally on left wall with angled perspective matching Reference D, pushed backwards for spacious framing
-      wardrobeGroup.position.set(-1.38, 0, -3.20);
+      wardrobeGroup.position.set(-1.38, 0, -3.55);
       wardrobeGroup.rotation.y = 0.24;
 
       const scale = 2.40 / 3.00;
@@ -1531,7 +1531,7 @@
       // =======================================================================
       const pot1Group = new THREE.Group();
       pot1Group.name = 'FlowerPot1_CallaLilies';
-      pot1Group.position.set(-1.82, 0, -1.85);
+      pot1Group.position.set(-1.68, 0, -1.95);
 
       // 1. Soft contact shadow on travertine floor
       const shadow1 = new THREE.Mesh(new THREE.CircleGeometry(0.34, 32), shadowMat);
@@ -1720,7 +1720,7 @@
       // =======================================================================
       const pot2Group = new THREE.Group();
       pot2Group.name = 'FlowerPot2_BlushPeonies';
-      pot2Group.position.set(1.65, 0, -1.45);
+      pot2Group.position.set(1.48, 0, -1.62);
 
       // 1. Contact shadow disc
       const shadow2 = new THREE.Mesh(new THREE.CircleGeometry(0.30, 32), shadowMat);
